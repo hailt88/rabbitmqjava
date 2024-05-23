@@ -1,0 +1,4 @@
+org\rabbitmqproject\producer.class
+org\rabbitmqproject\consumer.class
+org\rabbitmqproject\RabbitmqProject.class
+org\rabbitmqproject\consumer$1.class
