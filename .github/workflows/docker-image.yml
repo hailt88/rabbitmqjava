@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - master
-
+  tags:
+    - '*'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,9 +23,23 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
+      - name: Extract version information
+        id: vars
+        run: |
+          GIT_SHA=$(git rev-parse --short HEAD)
+          GIT_TAG=$(git describe --tags --exact-match 2>/dev/null || echo "")
+          if [ -n "$GIT_TAG" ]; then
+            echo "::set-output name=version::$GIT_TAG"
+          else
+            echo "::set-output name=version::$GIT_SHA"
+          fi
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/rabbitmq:latest
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/rabbitmq:latest
+            ${{ secrets.DOCKER_USERNAME }}/rabbitmq:${{ steps.vars.outputs.version }}
+            
