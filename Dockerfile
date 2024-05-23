@@ -5,7 +5,7 @@ FROM openjdk:11-jre-slim
 WORKDIR /app
 
 # Copy the packaged jar file into the container at /app
-COPY target/rabbitmqProject-1.0-SNAPSHOT.jar /app/rabbitmqProject-1.0-SNAPSHOT
+COPY target/rabbitmqProject-1.0-SNAPSHOT.jar /app/rabbitmqProject-1.0-SNAPSHOT.jar
 
 # Define environment variable for CloudAMQP URL
 ENV CLOUDAMQP_URL=amqps://rakkoayb:bLYhhjRY66XIbXOhGSCTNWMX5S1RHzhS@armadillo.rmq.cloudamqp.com/rakkoayb
