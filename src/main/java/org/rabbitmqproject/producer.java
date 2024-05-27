@@ -4,6 +4,7 @@
  */
 package org.rabbitmqproject;
 
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -23,6 +24,13 @@ public class producer implements Runnable{
         thread = new Thread(this);
         thread.start();
     }
+    
+    public void startProducer(){
+        this.thread.start();
+    }
+    public void stopProducer(){
+        this.thread.interrupt();
+    }
 
     @Override
     public void run() {
@@ -39,17 +47,19 @@ public class producer implements Runnable{
             String msg = "HELLO: "+time;
             channel.queueDeclare(nameQueue, false, false, false, null);
             System.out.println("Channel number: "+channel.getChannelNumber());
-            for(int i = 0; i < 3000; i++){
+            AMQP.BasicProperties pros = new AMQP.BasicProperties();
+//            pros.
+            for(int i = 0; i < 100; i++){
                 time = String.valueOf(new Date().getTime());
                 msg = "HELLO HELLO ["+i+"] "+time;
                 channel.basicPublish("", nameQueue, null, msg.getBytes());
                 System.out.println("SEND TO QUEUE: "+msg);
-                Thread.sleep(1000);
+                Thread.sleep(500);
             }
             System.out.println("connection_id: "+connection.getId());
-            Thread.sleep(50000);
-            channel.close();
-            connection.close();
+//            Thread.sleep(50000);
+//            channel.close();
+//            connection.close();
         } catch (Exception ex) {
 //            Logger.getLogger(RabbitmqProject.class.getName()).log(Level.SEVERE, null, ex);
         }finally{

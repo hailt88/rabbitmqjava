@@ -40,6 +40,7 @@ public class RabbitmqProject {
             RabbitmqProject runner = new RabbitmqProject();
             runner.test(3);
             String uri = System.getenv("CLOUDAMQP_URL");
+            uri = "amqps://rakkoayb:bLYhhjRY66XIbXOhGSCTNWMX5S1RHzhS@armadillo.rmq.cloudamqp.com/rakkoayb";
             System.out.println("Hello World! ["+uri+"]");
             if (uri == null || uri.isEmpty()) {
                 System.err.println("CLOUDAMQP_URL environment variable is not set.");
@@ -58,8 +59,7 @@ public class RabbitmqProject {
                 output.flush();
                 exchange.close();
             }));
-
-        // Start the server
+//         Start the server
         server.start();
 
         } catch (Exception ex) {

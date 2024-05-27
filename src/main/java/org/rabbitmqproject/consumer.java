@@ -57,9 +57,9 @@ public class consumer implements Runnable{
             };
             channel.basicConsume(nameQueue, true, consumer);                    
             System.out.println("connection_id: "+connection.getId());
-            Thread.sleep(50000);
-            channel.close();
-            connection.close();
+//            Thread.sleep(50000);
+//            channel.close();
+//            connection.close();
         } catch (Exception ex) {
 //            Logger.getLogger(RabbitmqProject.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
